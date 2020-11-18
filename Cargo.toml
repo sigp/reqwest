@@ -36,7 +36,7 @@ native-tls-vendored = ["native-tls", "native-tls-crate/vendored"]
 
 rustls-tls = ["hyper-rustls", "tokio-rustls", "webpki-roots", "rustls", "__tls"]
 
-blocking = ["futures-util/io", "tokio/rt-threaded", "tokio/rt-core", "tokio/sync"]
+blocking = ["futures-util/io", "tokio/rt-multi-thread", "tokio/rt", "tokio/sync"]
 
 cookies = ["cookie_crate", "cookie_store", "time"]
 
@@ -62,9 +62,9 @@ __tls = []
 __internal_proxy_sys_no_cache = []
 
 [dependencies]
-http = "0.2"
+http = { git = "https://github.com/agemanning/http", branch = "lighthouse" }
 url = "2.2"
-bytes = "0.5"
+bytes = "0.6"
 serde = "1.0"
 serde_urlencoded = "0.7"
 mime_guess = "2.0"
@@ -76,13 +76,13 @@ base64 = "0.13"
 encoding_rs = "0.8"
 futures-core = { version = "0.3.0", default-features = false }
 futures-util = { version = "0.3.0", default-features = false }
-http-body = "0.3.0"
-hyper = { version = "0.13.4", default-features = false, features = ["tcp"] }
+http-body = { git = "https://github.com/agemanning/http-body", branch = "lighthouse" }
+hyper = { git = "https://github.com/sigp/hyper", branch = "lighthouse", default-features = false, features = ["tcp"] }
 lazy_static = "1.4"
 log = "0.4"
 mime = "0.3.7"
 percent-encoding = "2.1"
-tokio = { version = "0.2.5", default-features = false, features = ["tcp", "time"] }
+tokio = { version = "0.3.3", default-features = false, features = ["net", "time"] }
 pin-project-lite = "0.2.0"
 ipnet = "2.3"
 
@@ -96,7 +96,7 @@ tokio-tls = { version = "0.3.0", optional = true }
 # rustls-tls
 hyper-rustls = { version = "0.21", default-features = false, optional = true }
 rustls = { version = "0.18", features = ["dangerous_configuration"], optional = true }
-tokio-rustls = { version = "0.14", optional = true }
+tokio-rustls = { version = "0.20.0", optional = true }
 webpki-roots = { version = "0.20", optional = true }
 
 ## cookies
@@ -109,19 +109,19 @@ async-compression = { version = "0.3.0", default-features = false, features = ["
 
 
 ## socks
-tokio-socks = { version = "0.3", optional = true }
+tokio-socks = { version = "0.4.0", optional = true }
 
 ## trust-dns
 trust-dns-resolver = { version = "0.19", optional = true }
 
 [target.'cfg(not(target_arch = "wasm32"))'.dev-dependencies]
 env_logger = "0.7"
-hyper = { version = "0.13", default-features = false, features = ["tcp", "stream"] }
+hyper = { git = "https://github.com/sigp/hyper", branch = "lighthouse", default-features = false, features = ["tcp", "stream" ] }
 serde = { version = "1.0", features = ["derive"] }
 libflate = "1.0"
 brotli_crate = { package = "brotli", version = "3.3.0" }
 doc-comment = "0.3"
-tokio = { version = "0.2.0", default-features = false, features = ["macros"] }
+tokio = { version = "0.3.3", default-features = false, features = ["macros"] }
 
 [target.'cfg(windows)'.dependencies]
 winreg = "0.7"
